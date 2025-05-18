@@ -16,11 +16,11 @@ public:
 	float x, y;
 	int speedX, speedY;
 	int radius;
-
+	//Drawing Ball shape
 	void Draw() {
 		DrawCircle(x, y, radius, RED);
 	}
-	
+	//Updating ball movements
     void Update(int screenWidth, int screenHeight) {
 		x += speedX;
 		y += speedY;
@@ -35,12 +35,13 @@ public:
 			cpuScore++;
 			ResetBall();
 		}
+	    //Checking collision with top or bottom walls
 		if (y + radius >= screenHeight || y - radius <= 0)
 		{
 			speedY *= -1;
 		}
 	}
-
+	//Setting ball back in the center with random ititial direction after scoring
 	void ResetBall() {
 		x = GetScreenWidth() / 2;
 		y = GetScreenHeight() / 2;
@@ -52,7 +53,7 @@ public:
 };
 
 class Paddle {
-
+//This function makes sure the paddles do not move out from the game window
 protected :
 	void LimitMovement() {
 		if (y <= 0)
@@ -74,7 +75,7 @@ public :
 	void Draw() {
 		DrawRectangle(x, y, width, height, color);
 	}
-
+//Function to move paddles up and down in window range
 	void Update() {
 		if (IsKeyDown(KEY_UP)) 
 		{
@@ -88,7 +89,7 @@ public :
 		LimitMovement();
 	}
 };
-
+// Child class of Paddle with specific function to follow Y coordinate of the ball
 class CpuPaddle: public Paddle {
 public:
 	void Update(int ballY) 
@@ -106,13 +107,13 @@ public:
 
 };
 
-
+//Creating game objects
 Ball ball;
 Paddle player;
 CpuPaddle cpu;
 
 int main() {
-
+//Initializing the characteristics of the object's
 	ball.radius = 20;
 	ball.x = screenWidth / 2;
 	ball.y = screenHeight / 2;
@@ -133,10 +134,10 @@ int main() {
 	cpu.y = screenHeight / 2 - cpu.height / 2;
 	cpu.speed = 6;
 
-
+//Creating a game window
 	InitWindow(screenWidth, screenHeight, "Raylib Ping Pong");
 	SetTargetFPS(60);
-
+//Game loop
 	while (!WindowShouldClose()) {
 
 		BeginDrawing();
